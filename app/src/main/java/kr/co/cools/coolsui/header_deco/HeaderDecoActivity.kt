@@ -19,6 +19,8 @@ class HeaderDecoActivity: AppCompatActivity() {
         val TAG = "HeaderDecoActivity"
     }
 
+    private val headerDecoration = HeaderDecorationImpl()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_header_deco)
@@ -68,20 +70,27 @@ class HeaderDecoActivity: AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter?.notifyDataSetChanged()
 
-        recyclerView.addItemDecoration(object: HeaderDecoration() {
-            override fun createHeaderViewHolder(context: Context, parent: RecyclerView, position: Int): RecyclerView.ViewHolder {
-                val view = LayoutInflater.from(context).inflate(R.layout.item_header, parent, false) as ViewGroup
-                return HeaderViewHolder(view).apply {
-                    bind((parent.adapter as ViewAdapter).itemList[position] as Item.HeaderItem)
-                }
-            }
-
-            override fun isHeaderItem(recyclerView: RecyclerView, position: Int): Boolean {
-                return (recyclerView.adapter as ViewAdapter).itemList[position] is Item.HeaderItem
-            }
-
-        })
+        recyclerView.addItemDecoration(headerDecoration)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        recyclerView.removeItemDecoration(headerDecoration)
+    }
+
+    class HeaderDecorationImpl: HeaderDecoration() {
+        override fun createHeaderViewHolder(context: Context, parent: RecyclerView, position: Int): RecyclerView.ViewHolder {
+            val view = LayoutInflater.from(context).inflate(R.layout.item_header, parent, false) as ViewGroup
+            return HeaderViewHolder(view).apply {
+                bind((parent.adapter as ViewAdapter).itemList[position] as Item.HeaderItem)
+            }
+        }
+
+        override fun isHeaderItem(recyclerView: RecyclerView, position: Int): Boolean {
+            return (recyclerView.adapter as ViewAdapter).itemList[position] is Item.HeaderItem
+        }
+    }
+
 
     sealed class Item(val type: Type){
         class HeaderItem(val title: String): Item(Type.Header)

@@ -72,3 +72,14 @@ xml
             android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/circular"/>
 ```
+
+Available attribute for CircularProgress
+```xml
+    <declare-styleable name="CircularProgress">
+        <attr name="strokeWidth" format="dimension"/>
+        <attr name="strokeColor" format="color" />
+        <attr name="strokeBgColor" format="color" />
+        <attr name="minValue" format="integer" />
+        <attr name="maxValue" format="integer" />
+    </declare-styleable>
+```

@@ -60,3 +60,15 @@
         })
     }
 ````
+
+
+xml
+```xml
+    <kr.co.cools.design.progress.CircularProgress
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/circular"/>
+```
